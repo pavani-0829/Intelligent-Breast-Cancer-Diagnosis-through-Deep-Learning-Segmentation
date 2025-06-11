@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ predict | upper }} Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 81, 255, 0.3), 0 10px 20px rgba(0, 81, 255, 0.15);
+            background-color: #b8ddc0;
+        }
+        .header-img {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .info-left {
+            flex: 1;
+            max-width: 300px;
+            padding: 10px;
+        }
+        .info-right {
+            flex: 2;
+            padding: 10px;
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            color: #333;
+        }
+        table th {
+            background-color: #4a90e2;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            background-color: #f9f9f9;
+        }
+        table tr:nth-child(even) td {
+            background-color: #f0f8ff;
+        }
+        table tr:hover td {
+            background-color: #e0ebf6;
+        }
+        .card h2 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="bg-red-100 p-6">
+    <nav class="bg-teal-500 p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-Black text-3xl font-bold hover:text-teal-200 transition duration-300">Breast cancer</a>
+            <ul class="flex space-x-8">
+                <li><a href="/" class="text-Black text-lg font-medium hover:bg-teal-600 px-4 py-2 rounded-lg transition duration-300">Home</a></li>
+                <li><a href="{% url 'model' %}" class="text-Black text-lg font-medium hover:bg-teal-600 px-4 py-2 rounded-lg transition duration-300">Model</a></li>
+                <li><a href="{% url 'Database' %}" class="text-Black text-lg font-medium hover:bg-teal-600 px-4 py-2 rounded-lg transition duration-300">Database</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4">
+        <div class="info-section card">
+            <!-- Left Section: Image -->
+            <div class="info-left">
+            <center>    <p><strong>Segment image:</strong></p></center>
+                <img height="300px" width="300px" src="{{ image_uri }}" alt="Segment image"><br><br>
+                <center> <p><strong>Classified image:</strong></p></center>
+                <img height="300px" width="300px" src="{{ obj.image.url }}" alt="Classified image">
+            </div>
+
+            <!-- Right Section: Description and Details -->
+            <div class="info-right">
+                <h1 class="text-4xl font-bold mb-6">{{ predict | upper }}</h1>
+
+                {% if obj %}
+                <div class="grid gap-6">
+                    {% if predict == 'benign' %}
+                        <h2 class="section-title">Benign Condition</h2>
+                        <table>
+                            <tr>
+                                <th>Description</th>
+                                <td>Benign tumors are non-cancerous growths that do not spread to other parts of the body. They may still require treatment or monitoring depending on their size and location.</td>
+                            </tr>
+                            <tr>
+                                <th>Causes</th>
+                                <td>Genetic predisposition, hormonal changes, certain medications, or environmental factors. In many cases, the exact cause is not known.</td>
+                            </tr>
+                            <tr>
+                                <th>Prevention</th>
+                                <td>Regular check-ups, maintaining a healthy lifestyle, and managing risk factors such as obesity or hormonal imbalances. Early detection through screenings can also aid in prevention.</td>
+                            </tr>
+                            <tr>
+                                <th>Treatment</th>
+                                <td>Treatment options may include surgical removal, medication, or regular monitoring. The choice of treatment depends on the tumor’s size, location, and impact on health.</td>
+                            </tr>
+                            <tr>
+                                <th>Diet</th>
+                                <td>Adopt a balanced diet rich in fruits, vegetables, whole grains, and lean proteins. Limiting processed foods and maintaining a healthy weight are also beneficial.</td>
+                            </tr>
+                            <tr>
+                                <th>Physical Activity</th>
+                                <td>Engage in regular physical activity such as walking, swimming, or cycling. Exercise helps maintain overall health and supports the immune system.</td>
+                            </tr>
+                            <tr>
+                                <th>Body Condition Level</th>
+                                <td>Maintain a healthy body weight and overall wellness. Regular monitoring and follow-ups with healthcare providers are important.</td>
+                            </tr>
+                            <tr>
+                                <th>Affected Age Group</th>
+                                <td>Benign tumors can affect individuals of all ages, but certain types may be more common in specific age groups. Regular screenings can help detect them early.</td>
+                            </tr>
+                            <tr>
+                                <th>Additional Information</th>
+                                <td>Benign tumors are generally not life-threatening but may cause symptoms depending on their location. Regular medical evaluations are recommended.</td>
+                            </tr>
+                        </table>
+
+                    {% elif predict == 'malignant' %}
+                        <h2 class="section-title">Malignant Condition</h2>
+                        <table>
+                            <tr>
+                                <th>Description</th>
+                                <td>Malignant tumors are cancerous and have the potential to invade surrounding tissues and spread to other parts of the body. Early diagnosis and treatment are crucial.</td>
+                            </tr>
+                            <tr>
+                                <th>Causes</th>
+                                <td>Genetic mutations, exposure to carcinogens (such as tobacco smoke or certain chemicals), and lifestyle factors (such as poor diet and lack of exercise) contribute to the risk.</td>
+                            </tr>
+                            <tr>
+                                <th>Prevention</th>
+                                <td>Avoid known carcinogens, practice healthy lifestyle habits, and undergo regular screenings. Vaccinations against certain viruses (like HPV) may also help prevent some cancers.</td>
+                            </tr>
+                            <tr>
+                                <th>Treatment</th>
+                                <td>Treatment options include chemotherapy, radiation therapy, targeted therapies, and surgery. The treatment plan depends on the type and stage of cancer.</td>
+                            </tr>
+                            <tr>
+                                <th>Diet</th>
+                                <td>Focus on an anti-cancer diet, which includes plenty of fruits, vegetables, and whole grains. Limit intake of red and processed meats, and avoid excessive alcohol consumption.</td>
+                            </tr>
+                            <tr>
+                                <th>Physical Activity</th>
+                                <td>Regular physical activity, such as brisk walking or strength training, can help manage weight and improve overall health. It is important to stay active even during treatment.</td>
+                            </tr>
+                            <tr>
+                                <th>Body Condition Level</th>
+                                <td>Maintaining a healthy body weight and fitness level can support overall well-being and improve the effectiveness of treatments.</td>
+                            </tr>
+                            <tr>
+                                <th>Affected Age Group</th>
+                                <td>Malignant tumors can affect individuals of any age, but the risk generally increases with age. Certain cancers may be more prevalent in specific age groups.</td>
+                            </tr>
+                            <tr>
+                                <th>Additional Information</th>
+                                <td>Early detection through screenings can significantly improve outcomes. Support from healthcare professionals and support groups can aid in coping with diagnosis and treatment.</td>
+                            </tr>
+                        </table>
+
+                    {% elif predict == 'normal' %}
+                        <h2 class="section-title">Normal Condition</h2>
+                        <table>
+                            <tr>
+                                <th>Description</th>
+                                <td>The normal classification indicates that the images and test results show no abnormalities. This suggests that the tested area is healthy and functioning well.</td>
+                            </tr>
+                            <tr>
+                                <th>Causes</th>
+                                <td>No specific causes as no abnormalities are detected. This status typically indicates that the individual's health is within normal ranges.</td>
+                            </tr>
+                            <tr>
+                                <th>Prevention</th>
+                                <td>Continue with regular health check-ups and maintain a healthy lifestyle to sustain good health. Follow general wellness guidelines and recommended preventive measures.</td>
+                            </tr>
+                            <tr>
+                                <th>Treatment</th>
+                                <td>No treatment required as the results are within normal ranges. Maintain a healthy lifestyle to support ongoing well-being.</td>
+                            </tr>
+                            <tr>
+                                <th>Diet</th>
+                                <td>Adopt a balanced diet rich in essential nutrients to support overall health. Include a variety of fruits, vegetables, whole grains, and lean proteins in your diet.</td>
+                            </tr>
+                            <tr>
+                                <th>Physical Activity</th>
+                                <td>Engage in regular physical activity such as walking, jogging, or other exercises to maintain fitness and overall health.</td>
+                            </tr>
+                            <tr>
+                                <th>Body Condition Level</th>
+                                <td>Maintain a healthy weight and overall wellness. Continue with regular check-ups and a balanced lifestyle.</td>
+                            </tr>
+                            <tr>
+                                <th>Affected Age Group</th>
+                                <td>Normal results are applicable across all age groups. Regular health evaluations are beneficial for everyone.</td>
+                            </tr>
+                            <tr>
+                                <th>Additional Information</th>
+                                <td>Maintaining regular health screenings is crucial for early detection of any potential issues. Continue following a healthy lifestyle.</td>
+                            </tr>
+                        </table>
+
+                    
+                    {% endif %}
+                </div>
+                {% else %}
+                <p>No data available for prediction.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
